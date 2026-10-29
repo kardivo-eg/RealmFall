@@ -12,7 +12,10 @@ const json = (obj, status = 200, extra = {}) =>
   });
 
 async function falix(env, path, init = {}) {
-  const res = await fetch(env.FALIX_API_BASE.replace(/\/$/, '') + path, {
+  if (!env.FALIX_API_KEY) return { ok: false, status: 0, body: null, why: 'missing_key' };
+  let res;
+  try {
+  res = await fetch(env.FALIX_API_BASE.replace(/\/$/, '') + path, {
     ...init,
     headers: {
       authorization: 'Bearer ' + env.FALIX_API_KEY,
@@ -20,6 +23,7 @@ async function falix(env, path, init = {}) {
       ...(init.body ? { 'content-type': 'application/json' } : {}),
     },
   });
+  } catch (e) { return { ok: false, status: 0, body: null, why: 'network' }; }
   let body = null;
   try { body = await res.json(); } catch (e) {}
   return { ok: res.ok, status: res.status, body };
@@ -43,6 +47,7 @@ async function readStatus(env, ctx, request) {
     state = String(pick(d, 'state') || pick(d.live_status || {}, 'state') || 'unknown').toLowerCase();
   } else {
     state = 'unavailable';
+    var dbg = { upstream_status: s.status, why: s.why || null };
   }
 
   let players = null, max = null;
@@ -56,7 +61,7 @@ async function readStatus(env, ctx, request) {
     }
   }
 
-  const out = { state, players: typeof players === 'number' ? players : null, max: typeof max === 'number' ? max : null };
+  const out = { state, debug: dbg || undefined, players: typeof players === 'number' ? players : null, max: typeof max === 'number' ? max : null };
   ctx.waitUntil(cache.put(key, new Response(JSON.stringify(out), {
     headers: { 'content-type': 'application/json', 'cache-control': `max-age=${STATUS_TTL}` },
   })));
@@ -98,7 +103,8 @@ async function handleStart(request, env, ctx) {
     });
   }
   await cache.delete(lockKey); // failed, let them retry
-  return json({ result: 'error', message: 'Could not start the server right now.' }, 502);
+  return json({ result: 'error', message: 'Could not start the server right now.',
+    debug: { upstream_status: r.status, why: r.why || null, code: code || null } }, 502);
 }
 
 export default {
