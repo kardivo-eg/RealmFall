@@ -96,6 +96,7 @@ async function handleStart(request, env, ctx) {
 
   const code = pick(r.body && r.body.error, 'code');
   if (code === 'verification_required') {
+    await cache.delete(lockKey); // release the lock so they can retry right after verifying
     // Free plan: Falix wants its own check before a start.
     return json({
       result: 'verification_required',
