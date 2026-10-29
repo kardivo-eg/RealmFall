@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Realm Fall</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+:root{
+  --bg1:#f6f0ff;--bg2:#ffe9d2;--card:rgba(255,255,255,.78);--card-border:rgba(124,58,237,.18);
+  --text:#24103f;--muted:#6a5a86;--purple:#7c3aed;--purple-deep:#5b21b6;--orange:#f97316;--orange-soft:#fb9a4b;
+  --field:#f1e8ff;--field-border:rgba(124,58,237,.25);--on-orange:#2a1100;--shadow:0 20px 50px rgba(91,33,182,.18);
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg1:#14081f;--bg2:#2a0f3d;--card:rgba(36,18,58,.72);--card-border:rgba(167,112,255,.25);
+    --text:#f5eefe;--muted:#b6a3d4;--purple:#a770ff;--purple-deep:#7c3aed;--orange:#ff8a2a;--orange-soft:#ffb066;
+    --field:rgba(124,58,237,.16);--field-border:rgba(167,112,255,.35);--on-orange:#2a1100;--shadow:0 20px 60px rgba(0,0,0,.45)
+  }
+}
+:root[data-theme="dark"]{
+  --bg1:#14081f;--bg2:#2a0f3d;--card:rgba(36,18,58,.72);--card-border:rgba(167,112,255,.25);
+  --text:#f5eefe;--muted:#b6a3d4;--purple:#a770ff;--purple-deep:#7c3aed;--orange:#ff8a2a;--orange-soft:#ffb066;
+  --field:rgba(124,58,237,.16);--field-border:rgba(167,112,255,.35);--on-orange:#2a1100;--shadow:0 20px 60px rgba(0,0,0,.45)
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);min-height:100%}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;line-height:1.55;
+  background:
+    radial-gradient(600px 400px at 85% -5%,rgba(249,115,22,.28),transparent 60%),
+    radial-gradient(700px 500px at 0% 0%,rgba(124,58,237,.30),transparent 60%),
+    linear-gradient(160deg,var(--bg1),var(--bg2));
+  background-color:var(--bg1);
+  display:flex;justify-content:center;padding:36px 16px 48px
+}
+main{width:100%;max-width:520px}
+.hero{text-align:center;margin-bottom:26px}
+.badge{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--purple);
+  border:1px solid var(--card-border);background:var(--card);padding:6px 12px;border-radius:999px;margin-bottom:14px}
+h1{font-size:clamp(2.3rem,9vw,3.2rem);line-height:1.05;margin:0 0 10px;font-weight:800;letter-spacing:-.02em;
+  background:linear-gradient(90deg,var(--purple),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin:0;color:var(--muted);font-size:1.02rem}
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:20px;padding:22px;margin-bottom:18px;
+  box-shadow:var(--shadow);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.label{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:10px}
+.addr{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:1.2rem;font-weight:600;text-align:center;
+  word-break:break-all;background:var(--field);border:1px dashed var(--field-border);border-radius:12px;padding:16px 12px;margin-bottom:14px;
+  user-select:all;color:var(--text)}
+.btn{display:block;width:100%;text-align:center;text-decoration:none;font-size:1rem;font-weight:700;padding:14px;border-radius:12px;
+  border:0;cursor:pointer;font-family:inherit;transition:transform .12s ease,box-shadow .12s ease,filter .12s ease}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:linear-gradient(135deg,var(--orange),var(--orange-soft));color:var(--on-orange);box-shadow:0 8px 22px rgba(249,115,22,.35)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.alt{background:linear-gradient(135deg,var(--purple-deep),var(--purple));color:#fff;box-shadow:0 8px 22px rgba(124,58,237,.35)}
+.btn.alt:hover{filter:brightness(1.08)}
+.steps{list-style:none;margin:0 0 18px;padding:0;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;color:var(--text)}
+.steps li::before{content:counter(s);flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:.85rem;font-weight:800;
+  background:linear-gradient(135deg,var(--purple-deep),var(--orange));color:#fff;margin-top:1px}
+.foot{text-align:center;color:var(--muted);font-size:.85rem;margin-top:6px}
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <span class="badge">Minecraft Server</span>
+    <h1>Realm Fall</h1>
+    <p class="sub">Copy the address, jump in, and start the server if it’s asleep.</p>
+  </section>
+
+  <section class="card">
+    <div class="label">Server address</div>
+    <div class="addr" id="addr">realmfall.falix.pro</div>
+    <button class="btn primary" id="copy" type="button">Copy address</button>
+  </section>
+
+  <section class="card">
+    <div class="label">Server offline?</div>
+    <ol class="steps">
+      <li>Copy the address above.</li>
+      <li>Open the start page and paste it into the box.</li>
+      <li>Complete the CAPTCHA and press the start button.</li>
+      <li>Give it a minute, then join in Minecraft.</li>
+    </ol>
+    <a class="btn alt" href="https://falixnodes.net/startserver" target="_blank" rel="noopener">Open the start page</a>
+  </section>
+
+  <p class="foot">See you in the realm.</p>
+</main>
+<script>
+var btn=document.getElementById('copy');
+var text=document.getElementById('addr').textContent;
+btn.addEventListener('click',function(){
+  function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy address';},1800);}
+  function fallback(){
+    try{
+      var r=document.createRange();r.selectNodeContents(document.getElementById('addr'));
+      var s=window.getSelection();s.removeAllRanges();s.addRange(r);
+      document.execCommand('copy');done();
+    }catch(e){btn.textContent='Press and hold the address to copy';}
+  }
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,fallback);}
+    else{fallback();}
+  }catch(e){fallback();}
+});
+</script>
+</body>
+</html>
