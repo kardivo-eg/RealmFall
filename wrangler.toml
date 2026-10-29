@@ -1,11 +1,21 @@
 name = "realmfall"
+main = "src/worker.js"
 compatibility_date = "2026-10-08"
 
-# Static page only, no Worker code and no database. Separate from the store.
+# Static page, served through the Worker so /api/* can run code first.
 [assets]
 directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
 
-# Puts the page at realmfall.kardivo.store (kardivo.store must be on your Cloudflare account).
+[vars]
+SERVER_ID = "3551403"
+ALLOWED_ORIGIN = "https://realmfall.kardivo.store"
+# CHECK THIS against the Falix API docs (client.falixnodes.net/api-docs) before deploying.
+FALIX_API_BASE = "https://api.falixnodes.net/v1"
+
+# The API key is NOT here. Set it once with:  npx wrangler secret put FALIX_API_KEY
+
 routes = [
   { pattern = "realmfall.kardivo.store", custom_domain = true }
 ]

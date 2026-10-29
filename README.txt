@@ -1,10 +1,13 @@
-Realm Fall mini page for realmfall.kardivo.store
+Realm Fall page for realmfall.kardivo.store (status + start button)
 
-This is a separate Cloudflare project. It does not touch the Kardivo store code, and nothing in the store links to it.
+Separate Cloudflare project. It does not touch the Kardivo store.
 
 Deploy:
-  1. Unzip this folder and open a terminal inside it.
-  2. Run: npx wrangler deploy
-  3. Open https://realmfall.kardivo.store (DNS and the certificate are created automatically, it can take a minute).
+  1. In Falix, create an API key limited as tightly as the dashboard allows
+     (ideally: view + start for the Realm Fall server only). Do NOT use a full-access key.
+  2. Check FALIX_API_BASE in wrangler.toml against the Falix API docs.
+  3. npx wrangler secret put FALIX_API_KEY      (paste the key; it is stored by Cloudflare, not in files)
+  4. npx wrangler deploy
+  5. Open https://realmfall.kardivo.store
 
-To change the address later, edit public/index.html (search for realmfall.falix.pro) and run npx wrangler deploy again.
+The key must never be committed to GitHub or pasted into public/index.html.

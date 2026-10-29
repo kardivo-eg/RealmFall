@@ -60,6 +60,12 @@ h1{font-size:clamp(2.3rem,9vw,3.2rem);line-height:1.05;margin:0 0 10px;font-weig
 .steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;color:var(--text)}
 .steps li::before{content:counter(s);flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:.85rem;font-weight:800;
   background:linear-gradient(135deg,var(--purple-deep),var(--orange));color:#fff;margin-top:1px}
+.status{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px;font-weight:700}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--muted)}
+.dot.on{background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.25)}
+.dot.sleep{background:var(--orange)}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.note{margin:12px 0 0;text-align:center;color:var(--muted);font-size:.9rem;min-height:1.3em}
 .foot{text-align:center;color:var(--muted);font-size:.85rem;margin-top:6px}
 </style>
 </head>
@@ -68,7 +74,7 @@ h1{font-size:clamp(2.3rem,9vw,3.2rem);line-height:1.05;margin:0 0 10px;font-weig
   <section class="hero">
     <span class="badge">Minecraft Server</span>
     <h1>Realm Fall</h1>
-    <p class="sub">Copy the address, jump in, and start the server if it’s asleep.</p>
+    <p class="sub">Copy the address, start the server if it’s asleep, and jump in.</p>
   </section>
 
   <section class="card">
@@ -78,14 +84,11 @@ h1{font-size:clamp(2.3rem,9vw,3.2rem);line-height:1.05;margin:0 0 10px;font-weig
   </section>
 
   <section class="card">
-    <div class="label">Server offline?</div>
-    <ol class="steps">
-      <li>Copy the address above.</li>
-      <li>Open the start page and paste it into the box.</li>
-      <li>Complete the CAPTCHA and press the start button.</li>
-      <li>Give it a minute, then join in Minecraft.</li>
-    </ol>
-    <a class="btn alt" href="https://falixnodes.net/startserver" target="_blank" rel="noopener">Open the start page</a>
+    <div class="label">Server status</div>
+    <div class="status"><span class="dot" id="dot"></span><span id="stext">Checking…</span></div>
+    <button class="btn alt" id="start" type="button" disabled>Start server</button>
+    <p class="note" id="note"></p>
+    <noscript><a class="btn alt" href="https://falixnodes.net/startserver" target="_blank" rel="noopener">Open the start page</a></noscript>
   </section>
 
   <p class="foot">See you in the realm.</p>
@@ -107,6 +110,41 @@ btn.addEventListener('click',function(){
     else{fallback();}
   }catch(e){fallback();}
 });
+
+var dot=document.getElementById('dot'),stext=document.getElementById('stext'),
+    sbtn=document.getElementById('start'),note=document.getElementById('note');
+var FALLBACK='https://falixnodes.net/startserver';
+function render(st){
+  var s=st&&st.state;
+  dot.className='dot';
+  if(s==='running'||s==='online'){
+    dot.className='dot on';
+    stext.textContent='Online'+(st.players!==null&&st.players!==undefined?' · '+st.players+(st.max?'/'+st.max:'')+' playing':'');
+    sbtn.disabled=true;sbtn.textContent='Server is running';
+  }else if(s==='starting'){
+    dot.className='dot sleep';stext.textContent='Starting…';sbtn.disabled=true;sbtn.textContent='Starting…';
+  }else if(s==='unavailable'||s==='unknown'||!s){
+    stext.textContent='Status unavailable';sbtn.disabled=false;sbtn.textContent='Start server';
+  }else{
+    dot.className='dot sleep';stext.textContent='Asleep';sbtn.disabled=false;sbtn.textContent='Start server';
+  }
+}
+function poll(){
+  fetch('/api/status',{cache:'no-store'}).then(function(r){return r.json();}).then(render)
+    .catch(function(){render({state:'unavailable'});});
+}
+sbtn.addEventListener('click',function(){
+  sbtn.disabled=true;note.textContent='Sending start request…';
+  fetch('/api/start',{method:'POST'}).then(function(r){return r.json();}).then(function(d){
+    if(d.result==='started'||d.result==='already'){note.textContent='Starting. Give it about a minute, then join.';stext.textContent='Starting…';dot.className='dot sleep';setTimeout(poll,8000);}
+    else if(d.result==='cooldown'){note.textContent=d.message;setTimeout(poll,8000);}
+    else if(d.result==='verification_required'){
+      note.innerHTML='Falix needs a quick check first. <a href="'+(d.action_url||FALLBACK)+'" target="_blank" rel="noopener" style="color:var(--purple)">Open the start page</a>, paste the address above, then come back.';
+      sbtn.disabled=false;
+    }else{note.textContent=d.message||'Could not start. Try the start page instead.';sbtn.disabled=false;}
+  }).catch(function(){note.textContent='Could not reach the server. Try again.';sbtn.disabled=false;});
+});
+poll();setInterval(poll,20000);
 </script>
 </body>
 </html>
