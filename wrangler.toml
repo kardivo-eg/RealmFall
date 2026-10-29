@@ -1,0 +1,11 @@
+name = "realmfall"
+compatibility_date = "2026-10-08"
+
+# Static page only, no Worker code and no database. Separate from the store.
+[assets]
+directory = "./public"
+
+# Puts the page at realmfall.kardivo.store (kardivo.store must be on your Cloudflare account).
+routes = [
+  { pattern = "realmfall.kardivo.store", custom_domain = true }
+]
