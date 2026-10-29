@@ -3,130 +3,146 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Realm Fall</title>
+<title>RealmFall SMP</title>
+<meta name="description" content="How to join the RealmFall SMP Minecraft server.">
 <meta name="robots" content="noindex,nofollow">
 <style>
 :root{
-  --bg1:#f6f0ff;--bg2:#ffe9d2;--card:rgba(255,255,255,.78);--card-border:rgba(124,58,237,.18);
+  --bg1:#f6f0ff;--bg2:#ffe9d2;--card:rgba(255,255,255,.8);--card-border:rgba(124,58,237,.18);
   --text:#24103f;--muted:#6a5a86;--purple:#7c3aed;--purple-deep:#5b21b6;--orange:#f97316;--orange-soft:#fb9a4b;
-  --field:#f1e8ff;--field-border:rgba(124,58,237,.25);--on-orange:#2a1100;--shadow:0 20px 50px rgba(91,33,182,.18);
-  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)
+  --field:#f1e8ff;--field-border:rgba(124,58,237,.3);--on-orange:#2a1100;--shadow:0 18px 50px rgba(91,33,182,.16);
+  --green:#16a34a
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg1:#14081f;--bg2:#2a0f3d;--card:rgba(36,18,58,.72);--card-border:rgba(167,112,255,.25);
+    --bg1:#12071d;--bg2:#2a0f3d;--card:rgba(36,18,58,.74);--card-border:rgba(167,112,255,.25);
     --text:#f5eefe;--muted:#b6a3d4;--purple:#a770ff;--purple-deep:#7c3aed;--orange:#ff8a2a;--orange-soft:#ffb066;
-    --field:rgba(124,58,237,.16);--field-border:rgba(167,112,255,.35);--on-orange:#2a1100;--shadow:0 20px 60px rgba(0,0,0,.45)
+    --field:rgba(124,58,237,.16);--field-border:rgba(167,112,255,.4);--shadow:0 20px 60px rgba(0,0,0,.45);--green:#4ade80
   }
 }
 :root[data-theme="dark"]{
-  --bg1:#14081f;--bg2:#2a0f3d;--card:rgba(36,18,58,.72);--card-border:rgba(167,112,255,.25);
+  --bg1:#12071d;--bg2:#2a0f3d;--card:rgba(36,18,58,.74);--card-border:rgba(167,112,255,.25);
   --text:#f5eefe;--muted:#b6a3d4;--purple:#a770ff;--purple-deep:#7c3aed;--orange:#ff8a2a;--orange-soft:#ffb066;
-  --field:rgba(124,58,237,.16);--field-border:rgba(167,112,255,.35);--on-orange:#2a1100;--shadow:0 20px 60px rgba(0,0,0,.45)
+  --field:rgba(124,58,237,.16);--field-border:rgba(167,112,255,.4);--shadow:0 20px 60px rgba(0,0,0,.45);--green:#4ade80
 }
-html{scroll-padding-top:env(safe-area-inset-top,0px);min-height:100%}
 *{box-sizing:border-box}
+html{min-height:100%}
 body{
   margin:0;min-height:100vh;color:var(--text);
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;line-height:1.55;
   background:
-    radial-gradient(600px 400px at 85% -5%,rgba(249,115,22,.28),transparent 60%),
-    radial-gradient(700px 500px at 0% 0%,rgba(124,58,237,.30),transparent 60%),
+    radial-gradient(700px 420px at 90% -5%,rgba(249,115,22,.30),transparent 60%),
+    radial-gradient(800px 520px at 0% 0%,rgba(124,58,237,.32),transparent 60%),
     linear-gradient(160deg,var(--bg1),var(--bg2));
-  background-color:var(--bg1);
-  display:flex;justify-content:center;padding:36px 16px 48px
+  background-color:var(--bg1);background-attachment:fixed;
+  padding:max(28px,env(safe-area-inset-top)) 16px max(48px,env(safe-area-inset-bottom))
 }
-main{width:100%;max-width:520px}
-.hero{text-align:center;margin-bottom:26px}
-.badge{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--purple);
-  border:1px solid var(--card-border);background:var(--card);padding:6px 12px;border-radius:999px;margin-bottom:14px}
-h1{font-size:clamp(2.3rem,9vw,3.2rem);line-height:1.05;margin:0 0 10px;font-weight:800;letter-spacing:-.02em;
+main{width:100%;max-width:640px;margin:0 auto}
+.hero{text-align:center;padding:18px 0 26px}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  color:var(--purple);border:1px solid var(--card-border);background:var(--card);padding:7px 14px;border-radius:999px;margin-bottom:16px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--muted);flex:none}
+.dot.on{background:var(--green);box-shadow:0 0 0 4px rgba(34,197,94,.25)}
+.dot.sleep{background:var(--orange);box-shadow:0 0 0 4px rgba(249,115,22,.22)}
+h1{font-size:clamp(2.4rem,10vw,3.8rem);line-height:1.02;margin:0 0 12px;font-weight:850;letter-spacing:-.03em;
   background:linear-gradient(90deg,var(--purple),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{margin:0;color:var(--muted);font-size:1.02rem}
-.card{background:var(--card);border:1px solid var(--card-border);border-radius:20px;padding:22px;margin-bottom:18px;
-  box-shadow:var(--shadow);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.label{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:10px}
-.addr{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:1.2rem;font-weight:600;text-align:center;
-  word-break:break-all;background:var(--field);border:1px dashed var(--field-border);border-radius:12px;padding:16px 12px;margin-bottom:14px;
-  user-select:all;color:var(--text)}
-.btn{display:block;width:100%;text-align:center;text-decoration:none;font-size:1rem;font-weight:700;padding:14px;border-radius:12px;
-  border:0;cursor:pointer;font-family:inherit;transition:transform .12s ease,box-shadow .12s ease,filter .12s ease}
+.sub{margin:0 auto;max-width:42ch;color:var(--muted);font-size:1.05rem}
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:22px;padding:22px;margin-bottom:18px;
+  box-shadow:var(--shadow);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.label{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.state{display:flex;align-items:center;gap:10px;font-weight:750;font-size:1.05rem}
+.players{color:var(--muted);font-size:.92rem}
+.btn{display:block;width:100%;text-align:center;text-decoration:none;font-size:1rem;font-weight:700;padding:14px 16px;border-radius:13px;
+  border:0;cursor:pointer;font-family:inherit;transition:transform .12s ease,filter .12s ease}
 .btn:active{transform:scale(.98)}
-.btn.primary{background:linear-gradient(135deg,var(--orange),var(--orange-soft));color:var(--on-orange);box-shadow:0 8px 22px rgba(249,115,22,.35)}
-.btn.primary:hover{filter:brightness(1.06)}
-.btn.alt{background:linear-gradient(135deg,var(--purple-deep),var(--purple));color:#fff;box-shadow:0 8px 22px rgba(124,58,237,.35)}
-.btn.alt:hover{filter:brightness(1.08)}
-.steps{list-style:none;margin:0 0 18px;padding:0;counter-reset:s}
-.steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;color:var(--text)}
-.steps li::before{content:counter(s);flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:.85rem;font-weight:800;
-  background:linear-gradient(135deg,var(--purple-deep),var(--orange));color:#fff;margin-top:1px}
-.status{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px;font-weight:700}
-.dot{width:12px;height:12px;border-radius:50%;background:var(--muted)}
-.dot.on{background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.25)}
-.dot.sleep{background:var(--orange)}
-.btn[disabled]{opacity:.55;cursor:not-allowed}
-.note{margin:12px 0 0;text-align:center;color:var(--muted);font-size:.9rem;min-height:1.3em}
-.foot{text-align:center;color:var(--muted);font-size:.85rem;margin-top:6px}
+.btn:focus-visible{outline:3px solid var(--purple);outline-offset:2px}
+.btn.primary{background:linear-gradient(135deg,var(--orange),var(--orange-soft));color:var(--on-orange);box-shadow:0 8px 22px rgba(249,115,22,.32)}
+.btn.alt{background:linear-gradient(135deg,var(--purple-deep),var(--purple));color:#fff;box-shadow:0 8px 22px rgba(124,58,237,.32)}
+.btn:hover{filter:brightness(1.07)}
+.btn[disabled]{opacity:.55;cursor:not-allowed;filter:none}
+.note{margin:12px 0 0;text-align:center;color:var(--muted);font-size:.92rem;min-height:1.3em}
+.note a{color:var(--purple);font-weight:700}
+.addr{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:1.2rem;font-weight:650;text-align:center;
+  word-break:break-all;background:var(--field);border:1px dashed var(--field-border);border-radius:13px;padding:16px 12px;margin-bottom:14px;user-select:all}
+.steps{list-style:none;margin:0 0 20px;padding:0;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--card-border)}
+.steps li:last-child{border-bottom:0}
+.steps li::before{content:counter(s);flex:0 0 32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:.9rem;font-weight:800;
+  background:linear-gradient(135deg,var(--purple-deep),var(--orange));color:#fff}
+.steps b{display:block}
+.steps span{color:var(--muted);font-size:.95rem}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--field);border:1px solid var(--field-border);
+  border-radius:7px;padding:1px 7px;font-size:.92em;color:var(--text)}
+.foot{text-align:center;color:var(--muted);font-size:.85rem;margin-top:8px}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}}
 </style>
 </head>
 <body>
 <main>
-  <section class="hero">
-    <span class="badge">Minecraft Server</span>
-    <h1>Realm Fall</h1>
-    <p class="sub">Copy the address, start the server if it’s asleep, and jump in.</p>
-  </section>
+  <header class="hero">
+    <span class="badge"><span class="dot" id="dot"></span><span id="stext">Checking…</span></span>
+    <h1>RealmFall SMP</h1>
+    <p class="sub">A survival multiplayer world with the MedieCraft Lite modpack. Here’s how to get in.</p>
+  </header>
 
-  <section class="card">
-    <div class="label">Server address</div>
-    <div class="addr" id="addr">realmfall.falix.pro</div>
-    <button class="btn primary" id="copy" type="button">Copy address</button>
-  </section>
-
-  <section class="card">
-    <div class="label">Server status</div>
-    <div class="status"><span class="dot" id="dot"></span><span id="stext">Checking…</span></div>
+  <section class="card" aria-labelledby="l1">
+    <div class="label" id="l1">Server</div>
+    <div class="row">
+      <div class="state" id="state">Checking…</div>
+      <div class="players" id="players"></div>
+    </div>
     <button class="btn alt" id="start" type="button" disabled>Start server</button>
-    <p class="note" id="note"></p>
-    <noscript><a class="btn alt" href="https://falixnodes.net/startserver" target="_blank" rel="noopener">Open the start page</a></noscript>
+    <p class="note" id="note" aria-live="polite"></p>
+  </section>
+
+  <section class="card" aria-labelledby="l2">
+    <div class="label" id="l2">How to join</div>
+    <ol class="steps">
+      <li><div><b>Install the Modrinth App</b><span>Free launcher from modrinth.com/app.</span></div></li>
+      <li><div><b>Find MedieCraft - Lite</b><span>Use the button below to open the modpack page.</span></div></li>
+      <li><div><b>Install the modpack and launch it</b><span>Press Install, then Play.</span></div></li>
+      <li><div><b>Add the server</b><span>Go to Multiplayer → Add Server and enter the address below.</span></div></li>
+      <li><div><b>Click Done, select RealmFall, and join!</b><span>If it says offline, press Start server above and wait a minute.</span></div></li>
+    </ol>
+    <a class="btn primary" href="https://modrinth.com/modpack/mediecraft-lite" target="_blank" rel="noopener">Get MedieCraft - Lite</a>
+  </section>
+
+  <section class="card" aria-labelledby="l3">
+    <div class="label" id="l3">Server address</div>
+    <div class="addr" id="addr">realmfall.falix.pro</div>
+    <button class="btn alt" id="copy" type="button">Copy address</button>
   </section>
 
   <p class="foot">See you in the realm.</p>
 </main>
 <script>
-var btn=document.getElementById('copy');
-var text=document.getElementById('addr').textContent;
+var btn=document.getElementById('copy'),addrEl=document.getElementById('addr'),text=addrEl.textContent;
 btn.addEventListener('click',function(){
   function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy address';},1800);}
   function fallback(){
-    try{
-      var r=document.createRange();r.selectNodeContents(document.getElementById('addr'));
-      var s=window.getSelection();s.removeAllRanges();s.addRange(r);
-      document.execCommand('copy');done();
-    }catch(e){btn.textContent='Press and hold the address to copy';}
+    try{var r=document.createRange();r.selectNodeContents(addrEl);var s=window.getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');done();}
+    catch(e){btn.textContent='Press and hold the address to copy';}
   }
-  try{
-    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,fallback);}
-    else{fallback();}
-  }catch(e){fallback();}
+  try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,fallback);}else{fallback();}}
+  catch(e){fallback();}
 });
 
-var dot=document.getElementById('dot'),stext=document.getElementById('stext'),
-    sbtn=document.getElementById('start'),note=document.getElementById('note');
+var dot=document.getElementById('dot'),stext=document.getElementById('stext'),state=document.getElementById('state'),
+    players=document.getElementById('players'),sbtn=document.getElementById('start'),note=document.getElementById('note');
 var FALLBACK='https://falixnodes.net/startserver';
+function setState(cls,label,pl){dot.className='dot '+cls;stext.textContent=label;state.textContent=label;players.textContent=pl||'';}
 function render(st){
   var s=st&&st.state;
-  dot.className='dot';
   if(s==='running'||s==='online'){
-    dot.className='dot on';
-    stext.textContent='Online'+(st.players!==null&&st.players!==undefined?' · '+st.players+(st.max?'/'+st.max:'')+' playing':'');
-    sbtn.disabled=true;sbtn.textContent='Server is running';
+    var pl=(typeof st.players==='number')?st.players+(st.max?' / '+st.max:'')+' playing':'';
+    setState('on','Online',pl);sbtn.disabled=true;sbtn.textContent='Server is running';
   }else if(s==='starting'){
-    dot.className='dot sleep';stext.textContent='Starting…';sbtn.disabled=true;sbtn.textContent='Starting…';
+    setState('sleep','Starting…');sbtn.disabled=true;sbtn.textContent='Starting…';
   }else if(s==='unavailable'||s==='unknown'||!s){
-    stext.textContent='Status unavailable';sbtn.disabled=false;sbtn.textContent='Start server';
+    setState('','Status unavailable');sbtn.disabled=false;sbtn.textContent='Start server';
   }else{
-    dot.className='dot sleep';stext.textContent='Asleep';sbtn.disabled=false;sbtn.textContent='Start server';
+    setState('sleep','Asleep');sbtn.disabled=false;sbtn.textContent='Start server';
   }
 }
 function poll(){
@@ -136,13 +152,13 @@ function poll(){
 sbtn.addEventListener('click',function(){
   sbtn.disabled=true;note.textContent='Sending start request…';
   fetch('/api/start',{method:'POST'}).then(function(r){return r.json();}).then(function(d){
-    if(d.result==='started'||d.result==='already'){note.textContent='Starting. Give it about a minute, then join.';stext.textContent='Starting…';dot.className='dot sleep';setTimeout(poll,8000);}
+    if(d.result==='started'||d.result==='already'){note.textContent='Starting. Give it about a minute, then join.';setState('sleep','Starting…');setTimeout(poll,8000);}
     else if(d.result==='cooldown'){note.textContent=d.message;setTimeout(poll,8000);}
     else if(d.result==='verification_required'){
-      note.innerHTML='Falix needs a quick check first. <a href="'+(d.action_url||FALLBACK)+'" target="_blank" rel="noopener" style="color:var(--purple)">Open the start page</a>, paste the address above, then come back.';
+      note.innerHTML='Falix needs a quick check first. <a href="'+(d.action_url||FALLBACK)+'" target="_blank" rel="noopener">Open the start page</a>, paste the address, then come back.';
       sbtn.disabled=false;
-    }else{note.textContent=d.message||'Could not start. Try the start page instead.';sbtn.disabled=false;}
-  }).catch(function(){note.textContent='Could not reach the server. Try again.';sbtn.disabled=false;});
+    }else{note.innerHTML=(d.message||'Could not start.')+' <a href="'+FALLBACK+'" target="_blank" rel="noopener">Use the start page</a>.';sbtn.disabled=false;}
+  }).catch(function(){note.innerHTML='Could not reach the server. <a href="'+FALLBACK+'" target="_blank" rel="noopener">Use the start page</a>.';sbtn.disabled=false;});
 });
 poll();setInterval(poll,20000);
 </script>
